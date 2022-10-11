@@ -1,0 +1,19 @@
+name: polaris 
+on: 
+  push: 
+    branches: [ master ] 
+
+jobs: 
+  SCA: 
+    runs-on: ubuntu-latest 
+    steps: 
+      - uses: actions/checkout@v2 
+      - uses: actions/setup-java@v1 
+        with: 
+          java-version: 8 
+      - name: polaris 
+        run: | 
+          bash <(curl -s -L https://detect.synopsys.com/detect8.sh) --blackduck.url=$SYN_URL --blackduck.api.token=$SYN_TOKEN
+        env: 
+          SYN_TOKEN: ${{ secrets.SYN_TOKEN }} 
+          SYN_URL: ${{ secrets.SYN_URL }}           
